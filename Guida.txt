@@ -1,0 +1,19 @@
+Per testare il progetto per prima cosa fare make.
+
+Eseguire create_topo.sh che lancerà anche xdp loader sulla veth2.
+
+Eseguire sudo ip netns exec ns1  ./l4_lb -c "config.yaml" -i "veth1" 
+per attaccare il load balancer all'interfaccia veth1 nel namespace 1.
+
+(alternativamente all'ultimo comando eseguire sudo run.sh che aprirà un terminale con anche
+il log delle printk).
+
+Il python multi_send.py genererà traffico verso l'indirizzo espresso tra i parametri.
+
+ex.
+sudo python3 multi_send.py -d 192.168.9.5 -p 100 -m "ciao" -dp 9010 -sp 20055 -t 1000
+
+usage: multi_send.py [-h] -d DESTINATION -p PACKETS -m MESSAGE -dp DPORT -sp
+                     SPORT [-t THREADS]
+
+Per controllare se il pacchetto sia stato correttamente manipolato si può usare wireshark sull'interfaccia veth2.
